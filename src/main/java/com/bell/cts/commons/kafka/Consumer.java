@@ -14,7 +14,7 @@ public class Consumer {
   private static final String APPLICATION_ID = "applicationId";
 
   public static void main(String[] args) {
-    StreamsBuilder streamsBuilder = tableExample("test-topic");
+    StreamsBuilder streamsBuilder = streamExample("test-topic");
 
     Properties config = createConfig();
     KafkaStreams kafkaStreams = new KafkaStreams(streamsBuilder.build(), config);
@@ -33,6 +33,12 @@ public class Consumer {
         break;
       }
     }
+  }
+
+  private static StreamsBuilder streamExample(String topic) {
+    StreamsBuilder streamsBuilder = new StreamsBuilder();
+    streamsBuilder.stream(topic).foreach(((key, value) -> System.out.println(key + "###" + value)));
+    return streamsBuilder;
   }
 
   private static StreamsBuilder tableExample(String topic) {
